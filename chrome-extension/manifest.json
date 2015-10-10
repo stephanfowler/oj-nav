@@ -7,7 +7,7 @@
       "matches": [
         "http://www.theguardian.com/*"
       ],
-      "js": ["inject-iframe.js"]
+      "js": ["inject-nav.js"]
     }
   ],
   "manifest_version": 2
