@@ -1,0 +1,14 @@
+{
+  "name": "OJ nav",
+  "description": "Onward journey navgation",
+  "version": "1.0",
+  "content_scripts": [
+    {
+      "matches": [
+        "http://www.theguardian.com/*"
+      ],
+      "js": ["inject-iframe.js"]
+    }
+  ],
+  "manifest_version": 2
+}
