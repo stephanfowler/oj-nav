@@ -77,17 +77,23 @@ function loadItems() {
         if (xhr.readyState === 4) {
             if (xhr.responseText) {
                 collections = JSON.parse(xhr.responseText).collections;
-                document.getElementById('ojnav__reveal').innerHTML  = collections.slice(0,5).map(function(c) {
-                    return '<div>' + 
-                        '<div class="ojnav__coll__title">' + c.displayName + '</div>' +
-                        '<img class="ojnav__coll__thumb" src="' + c.content[0].thumbnail + '"/>' +
-                        '<div class="ojnav__coll__items">' +
-                            c.content.slice(0,3).map(function(i) { 
-                                return '<a class="ojnav__coll__items__item" href="/' + i.id + '">' + i.headline + '</a>';
-                            }).join('') +
-                        '</div>' +
-                    '</div>';
-                }).join('');
+                document.getElementById('ojnav__reveal').innerHTML  = collections
+                    .filter(function(c) {
+                        return c.content.length;
+                    })
+                    .map(function(c) {
+                        return '<div>' + 
+                            '<div class="ojnav__coll__title">' + c.displayName + '</div>' +
+                            '<img class="ojnav__coll__thumb" src="' + c.content[0].thumbnail + '"/>' +
+                            '<div class="ojnav__coll__items">' +
+                                c.content.slice(0,3).map(function(i) { 
+                                    return '<a class="ojnav__coll__items__item" href="/' + i.id + '">' + i.headline + '</a>';
+                                }).join('') +
+                            '</div>' +
+                        '</div>';
+                    })
+                    .slice(0,5)
+                    .join('');
             }
         }
     }
