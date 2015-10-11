@@ -77,10 +77,11 @@ function loadItems() {
         if (xhr.readyState === 4) {
             if (xhr.responseText) {
                 collections = JSON.parse(xhr.responseText).collections;
-                document.getElementById('ojnav__reveal').innerHTML  = collections
+                document.getElementById('ojnav__reveal').innerHTML = collections
                     .filter(function(c) {
                         return c.content.length;
                     })
+                    .slice(0,5)
                     .map(function(c) {
                         return '<div>' + 
                             '<div class="ojnav__coll__title">' + c.displayName + '</div>' +
@@ -92,7 +93,6 @@ function loadItems() {
                             '</div>' +
                         '</div>';
                     })
-                    .slice(0,5)
                     .join('');
             }
         }
