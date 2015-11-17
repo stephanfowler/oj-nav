@@ -10,8 +10,13 @@ function loadItems() {
 
     document.body.insertAdjacentHTML('afterBegin',
         '<style>' +
+
+            '.navigation-toggle {' +
+                'z-index: 99999;' +
+                'border: 0;' +
+            '}' +
+
             '.ojnav {' + 
-                
                 'position: fixed;' +
                 'z-index: 99999;' +
                 'background: #005689;' +
@@ -22,11 +27,13 @@ function loadItems() {
 
             '.ojnav-logo {' +
                 'float: right;' +
-                'margin: 3px 10px 0 0;' +
+                'margin: 3px 12px 0 0;' +
             '}' +
 
             '.ojnav__front {' +
-                'padding: 3px 60px 0 5px;' +
+                'padding: 0 5px 0 0;' +
+                'margin: 3px 60px 0 5px;' +
+                'border-right: 1px solid #333;' +
             '}' +
 
             '.ojnav__coll__title {' +
