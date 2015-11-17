@@ -105,7 +105,6 @@ function loadItems() {
 
             '.ojnav__front--initial .ojnav__coll__item {' +
                 'transform: rotateX(90deg);' +
-                'opacity: 0.5;' +
             '}' +
 
             '.ojnav__coll__item--0 {' +
@@ -121,7 +120,7 @@ function loadItems() {
             '}' +
 
             '.ojnav__coll__item--3 {' +
-                'transition-delay: 0.4s;' +
+                'transition-delay: 0.3s;' +
             '}' +
 
             '.ojnav__coll__item:nth-child(-n+3) {' +
