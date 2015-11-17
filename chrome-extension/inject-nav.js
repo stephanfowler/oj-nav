@@ -1,4 +1,16 @@
 
+function getRecents() {
+    return (sessionStorage.getItem('aaa-navhack') || '');
+}
+
+function updateRecents(withUrl) {
+    var oldRecentsArr = getRecents().split(',').filter(function(s) {return s;}).slice(0,5),
+        recents = [withUrl].concat(oldRecentsArr).join(',');
+
+    sessionStorage.setItem('aaa-navhack', recents);
+    return recents;
+}
+
 function getJsonSource() {
     var urlPre = 'https://api.nextgen.guardianapps.co.uk/',
         urlSuf = '/lite.json',
@@ -19,7 +31,9 @@ function getSection(id) {
 function getClass(id) {
     var kicks = (id + '').split('/');
 
-    return kicks[1] && !(kicks[1]).match(/^\d+$/) ? kicks[1] : kicks[0];
+    kick = kicks[1] && !(kicks[1]).match(/^(\d+|ng-interactive|blog)$/) ? kicks[1] : kicks[0];
+    kick = kick.replace('commentisfree', 'comment').replace('-news', '');
+    return kick;
 }
 
 function getKicker(id) {
@@ -33,6 +47,7 @@ function capitalize(id) {
 
 function loadItems() {
     var xhr = new XMLHttpRequest(),
+        recents,
         collections;
 
     document.querySelector('#header').insertAdjacentHTML('afterBegin',
@@ -44,7 +59,7 @@ function loadItems() {
             '}' +
 
             '.ojnav {' + 
-                'position: fixed;' +
+                'position: absolute;' +
                 'z-index: 99999;' +
                 'background: #005689;' +
                 'height: 88px;' +
@@ -80,7 +95,7 @@ function loadItems() {
                 'font-size: 14px;' +
                 'line-height: 18px;' +
                 "font-family: 'Guardian Egyptian Web', 'Guardian Text Egyptian Web', Georgia, serif;" +
-                'padding: 1px 5px;' +
+                'padding: 1px 0px 1px 5px;' +
                 'opacity: 1;' +
                 'transform: rotateX(0deg);' +
                 'transition: all .3s ease-out;' +
@@ -142,14 +157,19 @@ function loadItems() {
         if (xhr.readyState === 4) {
             if (xhr.responseText) {
                 collections = JSON.parse(xhr.responseText).collections;
+                recents = updateRecents(window.location.pathname.slice(1));
+
                 document.getElementById('ojnav__front').innerHTML = collections
                     .filter(function(c) {
                         return c.content.length;
                     })
                     .slice(0,5)
-                    .map(function(c, i) {
-                        return '<div class="ojnav__coll__item ojnav__coll__item--' + i + '">' +
-                            c.content.slice(0,1).map(function(i) { 
+                    .map(function(c, index) {
+                        return '<div class="ojnav__coll__item ojnav__coll__item--' + index + '">' +
+                            c.content
+                            .filter(function(i) { return recents.indexOf(i.id) === -1 })
+                            .slice(0,1)
+                            .map(function(i) { 
                                 return '<a class="ojnav__coll__item__kicker ojnav__coll__item__kicker--' + getClass(i.id) + '" href="/' + getSection(i.id) + '">' + getKicker(i.id) + '</a>' + 
                                        '<a class="ojnav__coll__item__headline" href="/' + i.id + '">' + i.headline + '</a>';
                             }).join('') +
