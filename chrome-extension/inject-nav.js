@@ -4,7 +4,7 @@ function getRecents() {
 }
 
 function updateRecents(withUrl) {
-    var oldRecentsArr = getRecents().split(',').filter(function(s) {return s;}).slice(0,5),
+    var oldRecentsArr = getRecents().split(',').filter(function(s) {return s;}).slice(0,2),
         recents = [withUrl].concat(oldRecentsArr).join(',');
 
     sessionStorage.setItem('aaa-navhack', recents);
@@ -25,7 +25,7 @@ function removeEls(selector) {
 }
 
 function getSection(id) {
-    return (id + '').split('/')[0];
+    return (id + '').split('/')[0].replace(/^news$/, 'uk-news');
 }
 
 function getClass(id) {
@@ -193,5 +193,7 @@ function loadItems() {
 }
 
 (function() {
-    loadItems();
+    if (window.location.pathname.length > 3) {
+        loadItems();
+    }
 })();
