@@ -31,13 +31,17 @@ function getSection(id) {
 function getClass(id) {
     var kicks = (id + '').split('/');
 
+    if (id.match(/\/live\//)) {
+        return 'live';
+    }
+
     kick = kicks[1] && !(kicks[1]).match(/^(\d+|ng-interactive|blog)$/) ? kicks[1] : kicks[0];
     kick = kick.replace('commentisfree', 'comment').replace('-news', '');
     return kick;
 }
 
 function getKicker(id) {
-    return capitalize(getClass(id).replace(/\-+/, ' '));
+    return capitalize(getClass(id).replace(/\-+/, ' ').replace(/lifeandstyle/, 'life'));
 }
 
 function capitalize(id) {
